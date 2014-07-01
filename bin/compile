@@ -52,6 +52,8 @@ for BUILDPACK in $(cat $1/.buildpacks); do
       fi
 
       # check if the buildpack left behind an environment for subsequent buildpacks
+      # We do not use profile.d because we cannot assume the buildpack copy over their dependencies correctly
+      # We could (should?) fix that and then use .profile.d
       if [ -e $dir/export ]; then
         echo "Loading export from buildpack"
         source $dir/export
