@@ -51,6 +51,12 @@ for BUILDPACK in $(cat $1/.buildpacks); do
         exit 1
       fi
 
+      # check if the buildpack left behind an environment for subsequent buildpacks
+      if [ -e $dir/export ]; then
+        echo "Loading export from buildpack"
+        source $dir/export
+      fi
+
       if [ -x $dir/bin/release ]; then
         $dir/bin/release $1 > $1/last_pack_release.out
       fi
